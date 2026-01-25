@@ -3,6 +3,8 @@ import { Space_Mono, Grenze_Gotisch } from "next/font/google";
 import "./globals.css";
 import { Toaster } from "sonner";
 import { Providers } from "@/components/providers";
+import { Analytics } from "@vercel/analytics/react";
+
 
 const ggSerif = Grenze_Gotisch({
   variable: "--font-serif",
@@ -33,6 +35,7 @@ export default function RootLayout({
       >
         <Providers>
         {children}
+        <Analytics/>
         <Toaster position="bottom-center"/>
         </Providers>
       </body>

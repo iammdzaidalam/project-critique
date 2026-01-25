@@ -1,12 +1,12 @@
 "use server";
 
 const generateResponse = async (data: string, tone: string) => {
-    const apiKey = process.env.OPENROUTER_API_KEY;
-    if (!apiKey) {
-      throw new Error("OPENROUTER_API_KEY is not set in environment variables.");
-    }
+  const apiKey = process.env.OPENROUTER_API_KEY;
+  if (!apiKey) {
+    throw new Error("OPENROUTER_API_KEY is not set in environment variables.");
+  }
 
-    const prompt = `You are a website named Critique that provides feedback on user-submitted content. You must strictly adhere to these instructions:
+  const prompt = `You are a website named Critique that provides feedback on user-submitted content. You must strictly adhere to these instructions:
     
     RULES:
     1. Always respond in a single paragraph.
@@ -25,43 +25,43 @@ const generateResponse = async (data: string, tone: string) => {
     3. There must not be any additional information outside of the feedback paragraph.
     4. There must be no line breaks, dashes, bullet points, or enumerations.
     `;
-    
-    try {
-      const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            Authorization: `Bearer ${apiKey}`,
-            'HTTP-Referer': 'https://critique-zaid.vercel.app', 
-            'X-Title': 'Critique',
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({
-            model: 'openai/gpt-oss-120b:free',
-            messages: [
-              {
-                role: 'user',
-                content: prompt,
-              },
-            ],
-            
-          }),
-        });
 
-      const json = await res.json();
-      if (!res.ok) {
-        console.error("OpenRouter API error:", json);
-        throw new Error(`OpenRouter failed with status ${res.status}`);
-        }
-        
-      const output = json.choices?.[0]?.message?.content;
-      if (!output) {
-    console.error("Empty model output:", json);
-    throw new Error("Model returned empty output.");
-  }
-      return output;
-    } catch (error) {
-      console.error("Error generating response");
+  try {
+    const res = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+      method: 'POST',
+      headers: {
+        Authorization: `Bearer ${apiKey}`,
+        'HTTP-Referer': 'https://critique-zaid.vercel.app',
+        'X-Title': 'Critique',
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        model: 'openai/gpt-oss-120b:free',
+        messages: [
+          {
+            role: 'user',
+            content: prompt,
+          },
+        ],
+
+      }),
+    });
+
+    const json = await res.json();
+    if (!res.ok) {
+      console.error("OpenRouter API error:", json);
+      throw new Error(`OpenRouter failed with status ${res.status}`);
     }
+
+    const output = json.choices?.[0]?.message?.content;
+    if (!output) {
+      console.error("Empty model output:", json);
+      throw new Error("Model returned empty output.");
+    }
+    return output;
+  } catch (_error) {
+    console.error("Error generating response");
+  }
 }
 
 export default generateResponse;

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 
-const ROAST_EMOJIS = ["🔥","🔥","🔥","😂","😡","👎"];
+const ROAST_EMOJIS = ["🔥","🔥","😡","👎"];
 
 type FireParticle = {
     id: number;
@@ -27,6 +27,7 @@ export default function FireBackground() {
             
             
         }))
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setParticles(newParticles);
     }, [])
 

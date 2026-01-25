@@ -204,7 +204,7 @@ export default function Home() {
                   setIsLoading(true);
                   const res = await analyzeGithub({ username, tone: tone! });
                   toast.success(res);
-                } catch (error) {
+                } catch (_error) {
                   toast.error("Error generating response");
                 }finally{
                   setIsLoading(false);
@@ -228,7 +228,7 @@ export default function Home() {
                   setIsLoading(true);
                   const res = await analyzeAnime({ username, tone: tone! });
                   toast.success(res);
-                } catch (error) {
+                } catch (_error) {
                   toast.error("Error generating response");
                 }finally{
                   setIsLoading(false);
@@ -252,7 +252,7 @@ export default function Home() {
                   setIsLoading(true);
                   const res = await analyzeLeetCode({ username, tone: tone! });
                   toast.success(res);
-                } catch (error) {
+                } catch (_error) {
                   toast.error("error generating resposnse");
                 }finally{
                   setIsLoading(false);

@@ -30,6 +30,7 @@ export default function EvaluateBackground() {
         EVALUATE_EMOJIS[Math.floor(Math.random() * EVALUATE_EMOJIS.length)],
     }));
 
+    // eslint-disable-next-line react-hooks/set-state-in-effect
     setParticles(newParticles);
   }, []);
 

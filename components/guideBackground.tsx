@@ -26,6 +26,7 @@ export default function GuideBackground() {
             emoji:GUIDE_EMOJIS[Math.floor(Math.random() * GUIDE_EMOJIS.length)],
             
         }))
+        // eslint-disable-next-line react-hooks/set-state-in-effect
         setParticles(newParticles);
     }, [])
 
