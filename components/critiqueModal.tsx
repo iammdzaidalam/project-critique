@@ -87,45 +87,15 @@ export default function CritiqueModal({
   const contentRef = useRef<HTMLDivElement | null>(null);
   const [isCopying, setIsCopying] = useState(false);
 
-  const handleCopyImage = async () => {
+  const handleCopyText = async () => {
     if (!contentRef.current) return;
     try {
       setIsCopying(true);
-      const grenzeB64 = await fileToBase64(
-        window.location.origin + "/fonts/GrenzeGotisch-Regular.ttf"
-      ).catch(() => null); 
-      const spaceMonoB64 = await fileToBase64(
-        window.location.origin + "/fonts/SpaceMono-Regular.ttf"
-      ).catch(() => null);
-
-      const fontCss = `
-            @font-face{
-                font-family:'Grenze Gotisch';
-                src:url('${grenzeB64}')format('truetype');
-            }
-            @font-face{
-                font-family:'Space Mono';
-                src: url('${spaceMonoB64}') format('truetype');
-            }
-            `;
-
-      const blob = await toBlob(contentRef.current!, {
-        cacheBust: true,
-        backgroundColor: document.documentElement.classList.contains("dark")
-          ? "#161616"
-          : "#ffffff",
-        fontEmbedCSS: fontCss,
-      });
-
-      if (!blob) throw new Error("Failed to generate image");
-
-      await navigator.clipboard.write([
-        new ClipboardItem({ [blob.type]: blob }),
-      ]);
-      toast.success("Critique copied to clipboard as image!");
+      await navigator.clipboard.writeText(critique);
+      toast.success("Critique text copied to clipboard!");
     } catch (error) {
-      console.error("Error copying critique image:", error);
-      toast.error("Failed to copy critique image.");
+      console.error("Error copying text:", error);
+      toast.error("Failed to copy critique text.");
     } finally {
       setIsCopying(false);
     }
@@ -157,7 +127,7 @@ export default function CritiqueModal({
             <X className="mr-2 h-2 w-2 md:h-4 md:w-4" />
             Close
           </Button>
-          <Button onClick={handleCopyImage} disabled={isCopying}>
+          <Button onClick={handleCopyText} disabled={isCopying}>
             {isCopying ? (
               <Loader2 className="mr-2 h-2 w-2 md:h-4 md:w-4 animate-spin" />
             ) : (
